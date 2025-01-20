@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TrafficLight from "./TrafficLight";
 
-const TrafficSimulation = () => {
+const TrafficSimulation = (props) => {
   const [lightTimers, setLightTimers] = useState([30, 30, 30, 30]);
 
+const vehicle_data=props.vehicle_data
   useEffect(() => {
     const interval = setInterval(() => {
       setLightTimers((prevTimers) =>
