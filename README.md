@@ -86,4 +86,8 @@ This will return the count of vehicles detected in each uploaded image. The vehi
 * Vehicle Type Detection: Detect specific vehicle types (e.g., cars, trucks, motorcycles) for further traffic management.
 * Real-Time Detection: Implement real-time detection using video streams instead of static images.
 
+- - -
+
+© 2025 Algo Riders. All Rights Reserved.
+
 
