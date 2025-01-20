@@ -17,20 +17,28 @@ const TrafficSimulation = ({ vehicle_data }) => {
   );
   const [currentTimer, setCurrentTimer] = useState(lightTimers[0]); // Timer for the active light
 
-  const [laneOneTimer, setlaneOneTimer] = useState(lightTimers[1]+lightTimers[2]+lightTimers[3])
-  const [laneTwoTimer, setlaneTwoTimer] = useState(lightTimers[0]+lightTimers[2]+lightTimers[3])
-  const [laneThreeTimer, setlaneThreeTimer] = useState(lightTimers[0]+lightTimers[1]+lightTimers[3])
+  const [laneOneTimer, setlaneOneTimer] = useState(0)
+  const [laneTwoTimer, setlaneTwoTimer] = useState(lightTimers[0])
+  const [laneThreeTimer, setlaneThreeTimer] = useState(lightTimers[0]+lightTimers[1])
   const [laneFourTimer, setlaneFourTimer] = useState(lightTimers[0]+lightTimers[1]+lightTimers[2])
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if(laneOneTimer > 0 ){
+        setlaneOneTimer((prev) => prev - 1);
+      }
+      if(laneTwoTimer > 0){
+        setlaneTwoTimer((prev) => prev - 1);
+      }
+      if(laneThreeTimer > 0 ){
+        setlaneThreeTimer((prev) => prev - 1);
+      }
+      if(laneFourTimer > 0){
+        setlaneFourTimer((prev) => prev - 1);
+      }
+      
       if (currentTimer > 0) {
         setCurrentTimer((prev) => prev - 1);
-
-        setlaneOneTimer((prev) => prev - 1);
-        setlaneTwoTimer((prev) => prev - 1);
-        setlaneThreeTimer((prev) => prev - 1);
-        setlaneFourTimer((prev) => prev - 1);
       } else {
         // Move to the next light
         setActiveLightIndex((prevIndex) => (prevIndex + 1) % 4);
