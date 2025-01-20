@@ -21,31 +21,34 @@ This project is a Traffic Light Management System that dynamically adjusts traff
 * Werkzeug: For secure file handling.
 * PIL (Pillow): For image manipulation
 
-You can install the dependencies by running:
-
-'''pip install -r requirements.txt'''
-
 # Installation & Setup
 
 1. Clone the repository:
 
-''' git@github.com:PiyushGhavghave/technex-2025.git
-cd technex-2025'''
+```bash 
+git@github.com:PiyushGhavghave/technex-2025.git
+cd technex-2025
+```
 
 2. Install dependencies:
 
-'''pip install -r requirements.txt'''
+```bash
+pip install -r requirements.txt
+```
 
 3. Place YOLO model:
 
 Ensure you have the YOLOv8 model (yolov8n.pt) in the root directory of your project or update the path in app.py.
 
-'''model = YOLO("yolov8n.pt")  # Replace with your YOLO model weights'''
+```python
+model = YOLO("yolov8n.pt")  # Replace with your YOLO model weights
+```
 
 4. Running the Flask App:
 
-'''python app.py'''
-
+```bash
+python app.py
+```
 By default, the API will be available at http://0.0.0.0:5000.
 
 ## React + Vite
@@ -65,13 +68,16 @@ The API accepts a POST request at the /upload endpoint. It expects images to be 
 * Each image will be processed by the YOLO model, and the number of vehicles detected in the image will be returned in the response.
 
 Sample Request:
-'''curl -X POST -F "image=@image1.jpg" -F "image=@image2.jpg" http://127.0.0.1:5000/upload'''
+```bash
+curl -X POST -F "image=@image1.jpg" -F "image=@image2.jpg" http://127.0.0.1:5000/upload
+```
 
 Response:
-'''{
+```json
+{
   "vehicle_counts": [5, 3]
 }
-'''
+```
 
 This will return the count of vehicles detected in each uploaded image. The vehicle count corresponds to the number of vehicles detected in each respective image (order of the uploaded files).
 
