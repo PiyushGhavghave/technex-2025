@@ -41,7 +41,8 @@ const App = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container  mx-auto px-4 py-8">
+        <div className="left-screen">
             <h1 className="text-3xl font-bold mb-8 text-center">
                 Traffic Management System
             </h1>
@@ -52,6 +53,8 @@ const App = () => {
                     disabled={inputs.some((input) => !input)}
                 />
             </div>
+
+        </div>
             {isSimulating && <TrafficSimulation vehicle_data={vehicleCount}/>}
         </div>
     );
