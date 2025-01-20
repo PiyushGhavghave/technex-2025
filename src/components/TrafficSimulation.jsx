@@ -1,24 +1,50 @@
 import React, { useState, useEffect } from "react";
 import TrafficLight from "./TrafficLight";
 
-const TrafficSimulation = () => {
-  const [lightTimers, setLightTimers] = useState([30, 30, 30, 30]);
+const TrafficSimulation = ({ vehicle_data }) => {
+  const calculateTimer = (count) => {
+    if (count < 5) return 10;
+    if (count < 10) return 20;
+    if (count < 15) return 30;
+    if (count < 20) return 50;
+    if (count < 30) return 70;
+    return 90;
+  };
+
+  const [activeLightIndex, setActiveLightIndex] = useState(0); // Active light (0: top, 1: right, 2: bottom, 3: left)
+  const [lightTimers, setLightTimers] = useState(() =>
+    vehicle_data.map((count) => calculateTimer(count))
+  );
+  const [currentTimer, setCurrentTimer] = useState(lightTimers[0]); // Timer for the active light
+
+  const [laneOneTimer, setlaneOneTimer] = useState(lightTimers[1]+lightTimers[2]+lightTimers[3])
+  const [laneTwoTimer, setlaneTwoTimer] = useState(lightTimers[0]+lightTimers[2]+lightTimers[3])
+  const [laneThreeTimer, setlaneThreeTimer] = useState(lightTimers[0]+lightTimers[1]+lightTimers[3])
+  const [laneFourTimer, setlaneFourTimer] = useState(lightTimers[0]+lightTimers[1]+lightTimers[2])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setLightTimers((prevTimers) =>
-        prevTimers.map((timer) => {
-          if (timer === 0) {
-            // Simulate dynamic adjustment based on traffic
-            return Math.floor(Math.random() * 20) + 20;
-          }
-          return timer - 1;
-        })
-      );
+      if (currentTimer > 0) {
+        setCurrentTimer((prev) => prev - 1);
+
+        setlaneOneTimer((prev) => prev - 1);
+        setlaneTwoTimer((prev) => prev - 1);
+        setlaneThreeTimer((prev) => prev - 1);
+        setlaneFourTimer((prev) => prev - 1);
+      } else {
+        // Move to the next light
+        setActiveLightIndex((prevIndex) => (prevIndex + 1) % 4);
+        setCurrentTimer(lightTimers[(activeLightIndex + 1) % 4]); // Update timer for the next light
+      }
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval); 
+  }, [currentTimer, lightTimers, activeLightIndex]);
+
+  useEffect(() => {
+    // Recalculate timers dynamically if `vehicle_data` changes
+    setLightTimers(vehicle_data.map((count) => calculateTimer(count)));
+  }, [vehicle_data]);
 
   return (
     <div className="relative w-full max-w-2xl h-[32rem] mx-auto mt-8 bg-gray-200 border border-gray-300">
@@ -31,10 +57,26 @@ const TrafficSimulation = () => {
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-yellow-400 transform -translate-y-1/2"></div>
       </div>
       {/* Traffic lights */}
-      <TrafficLight position="top" timer={lightTimers[0]} />
-      <TrafficLight position="right" timer={lightTimers[1]} />
-      <TrafficLight position="bottom" timer={lightTimers[2]} />
-      <TrafficLight position="left" timer={lightTimers[3]} />
+      <TrafficLight
+        position="top"
+        timer={activeLightIndex === 0 ? currentTimer : laneOneTimer}
+        isGreen={activeLightIndex === 0}
+      />
+      <TrafficLight
+        position="right"
+        timer={activeLightIndex === 1 ? currentTimer : laneTwoTimer}
+        isGreen={activeLightIndex === 1}
+      />
+      <TrafficLight
+        position="bottom"
+        timer={activeLightIndex === 2 ? currentTimer : laneThreeTimer}
+        isGreen={activeLightIndex === 2}
+      />
+      <TrafficLight
+        position="left"
+        timer={activeLightIndex === 3 ? currentTimer : laneFourTimer}
+        isGreen={activeLightIndex === 3}
+      />
     </div>
   );
 };
