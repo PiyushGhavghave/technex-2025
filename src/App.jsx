@@ -7,6 +7,7 @@ import axios from "axios";
 const App = () => {
     const [inputs, setInputs] = useState(Array(4).fill(null));
     const [isSimulating, setIsSimulating] = useState(false);
+    const [vehicleCount,setVehicleCount]=useState(0)
 
     const handleInputChange = (index, file) => {
         const newInputs = [...inputs];
@@ -49,7 +50,7 @@ const App = () => {
                     disabled={inputs.some((input) => !input)}
                 />
             </div>
-            {isSimulating && <TrafficSimulation />}
+            {isSimulating && <TrafficSimulation vehicle_data={}/>}
         </div>
     );
 };
