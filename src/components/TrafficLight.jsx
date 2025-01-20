@@ -1,7 +1,7 @@
 import React from "react";
 
-const TrafficLight = ({ position, timer }) => {
-  const isGreen = timer > 15;
+const TrafficLight = ({ position, timer,isGreen }) => {
+  // const isGreen = timer > 5;
 
   const positionClasses = {
     top: "top-36 -rotate-180 right-1/3 mr-6 transform translate-x-full -translate-y-1/2",
