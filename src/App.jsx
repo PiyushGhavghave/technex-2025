@@ -50,7 +50,7 @@ const App = () => {
                     disabled={inputs.some((input) => !input)}
                 />
             </div>
-            {isSimulating && <TrafficSimulation vehicle_data={}/>}
+            {isSimulating && <TrafficSimulation />}
         </div>
     );
 };
