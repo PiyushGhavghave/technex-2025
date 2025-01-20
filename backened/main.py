@@ -1,4 +1,5 @@
 # Importing required packages
+
 from flask import Flask, request, jsonify
 from ultralytics import YOLO
 import os
@@ -38,7 +39,6 @@ def get_vehicle_count(image_paths):
 
     return vehicle_count
 
-
 @app.route("/upload", methods=["POST"])
 def handle_request():
     # Ensure the request contains files
@@ -68,7 +68,6 @@ def handle_request():
 
     return jsonify({"vehicle_counts": vehicle_counts})
 
-
 # Run the Flask app
 if __name__ == "__main__":
     # Ensure uploads directory exists
@@ -76,3 +75,4 @@ if __name__ == "__main__":
         os.makedirs(UPLOAD_FOLDER)
 
     app.run(host="0.0.0.0", debug=True)
+
