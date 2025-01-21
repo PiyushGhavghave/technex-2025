@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputSection from "./components/InputSection";
 import ProcessButton from "./components/ProcessButton";
 import TrafficSimulation from "./components/TrafficSimulation";
+import TraditionalTrafficSimulation from "./components/TraditionalTrafficSimulation";
 import axios from "axios";
 
 const App = () => {
@@ -41,7 +42,7 @@ const App = () => {
     };
 
     return (
-        <div className="container  mx-auto px-4 py-8">
+        <div className="container  mx-auto py-8">
         <div className="left-screen">
             <h1 className="text-3xl font-bold mb-8 text-center">
                 Traffic Management System
@@ -55,7 +56,10 @@ const App = () => {
             </div>
 
         </div>
-            {isSimulating && <TrafficSimulation vehicle_data={vehicleCount}/>}
+            <div className="flex justify-around">
+                {isSimulating && <TraditionalTrafficSimulation vehicle_data={vehicleCount}/>}
+                {isSimulating && <TrafficSimulation vehicle_data={vehicleCount}/>}
+            </div>
         </div>
     );
 };

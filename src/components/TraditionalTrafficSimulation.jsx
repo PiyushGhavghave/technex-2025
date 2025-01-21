@@ -230,7 +230,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
     return (
       <motion.div
         key={index}
-        className="w-4 h-6"
+        className="w-4 h-full"
         animate={{
           x: xTranslation,
           transition: {
@@ -242,7 +242,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
         <motion.img
           src="whitecar-removebg-preview.png"
           alt={ `Car ${index + 1}`}
-          className="w-4 h-full object-cover"
+          className="w-4 h-6 object-cover"
           animate={{
             rotate: index >= partSize ? 90 : 0, // Rotate only for the second and third groups
             y: yTranslation,
@@ -263,7 +263,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
   });
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 mt-[21rem]"+(count<10?" mt-64":" mt-72")}>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-64":" mt-72")}>
       {carDivs}
     </div>
   );
@@ -284,9 +284,9 @@ const RenderCardBottom = ({ count }) => {
   ));
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 mt-[21rem]"+(count<10?" mt-64":" mt-72")}>
-    {carDivs}
-  </div>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-64":" mt-72")}>
+      {carDivs}
+    </div>
   );
 };
 
@@ -379,24 +379,19 @@ const RenderCarsTop = ({ count }) => {
   );
 };
 
-const TrafficSimulation = ({ vehicle_data }) => {
+const TraditionalTrafficSimulation = ({ vehicle_data }) => {
     const [topRed,setRed]=useState(true)
     const [topGreen,setGreen]=useState(false)
-  const calculateTimer = (count) => {
-    if (count < 10) return 5;
-    if (count < 20) return 10;
-    if (count < 30) return 15;
-       return 20;
-  };
+//   const calculateTimer = (count) => {
+//     if (count < 10) return 5;
+//     if (count < 20) return 10;
+//     if (count < 30) return 15;
+//        return 20;
+//   };
 
   const [activeLightIndex, setActiveLightIndex] = useState(0); // Active light (0: top, 1: right, 2: bottom, 3: left)
-  const [lightTimers, setLightTimers] = useState(() =>
-    vehicle_data.map((count) => calculateTimer(count))
-  );
+  const [lightTimers, setLightTimers] = useState([20,20,20,20]);
   const [currentTimer, setCurrentTimer] = useState(lightTimers[0]); // Timer for the active light
-
-  console.log(vehicle_data, lightTimers);
-  
 
   const [laneOneTimer, setlaneOneTimer] = useState(0)
   const [laneTwoTimer, setlaneTwoTimer] = useState(lightTimers[0])
@@ -431,11 +426,6 @@ const TrafficSimulation = ({ vehicle_data }) => {
     return () => clearInterval(interval); 
   }, [currentTimer, lightTimers, activeLightIndex]);
 
-  useEffect(() => {
-    // Recalculate timers dynamically if `vehicle_data` changes
-    setLightTimers(vehicle_data.map((count) => calculateTimer(count)));
-    
-  }, [vehicle_data]);
 
   return (
    <div className="relative w-full max-w-2xl h-[32rem] mx-auto mt-8 bg-green-200 border border-gray-300 ">
@@ -447,19 +437,19 @@ const TrafficSimulation = ({ vehicle_data }) => {
 
 
         <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-yellow-400 transform -translate-x-1/2 overflow-hidden"></div>
-        {activeLightIndex!=3 && <RenderCardBottom count={vehicle_data[3]} />}
-        {activeLightIndex==3 && <RenderCarsBottomAnimated count={vehicle_data[3]} />}
+        {activeLightIndex!=3 && <RenderCardBottom count={vehicle_data[2]} />}
+        {activeLightIndex==3 && <RenderCarsBottomAnimated count={vehicle_data[2]} />}
       </div>
 
       {/* Horizontal road */}
       <div className="absolute top-1/2 left-0 right-0 h-40 bg-gray-600 transform -translate-y-1/2 overflow-hidden">
      
-        {activeLightIndex!=1 && <RenderCarsleft count={vehicle_data[1]} />} 
-        {activeLightIndex==1 &&  <RenderCarsLeftAnimated count={vehicle_data[1]} />}
+        {activeLightIndex!=1 && <RenderCarsleft count={vehicle_data[3]} />} 
+        {activeLightIndex==1 &&  <RenderCarsLeftAnimated count={vehicle_data[3]} />}
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-yellow-400 transform -translate-y-1/2 "></div>
-        {activeLightIndex !=2 && <RenderCarsRighht count={vehicle_data[2]} />} 
+        {activeLightIndex != 2 && <RenderCarsRighht count={vehicle_data[1]} />} 
     
-        {activeLightIndex==2 && <RenderCarsRighhtAnimated count={vehicle_data[2]} />} 
+        {activeLightIndex==2 && <RenderCarsRighhtAnimated count={vehicle_data[1]} />} 
 
         
       </div>      {/* Traffic lights */}
@@ -487,4 +477,4 @@ const TrafficSimulation = ({ vehicle_data }) => {
   );
 };
 
-export default TrafficSimulation;
+export default TraditionalTrafficSimulation;

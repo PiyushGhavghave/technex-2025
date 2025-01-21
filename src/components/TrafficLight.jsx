@@ -5,9 +5,9 @@ const TrafficLight = ({ position, timer,isGreen }) => {
 
   const positionClasses = {
     top: "top-36 -rotate-180 right-1/3 mr-6 transform translate-x-full -translate-y-1/2",
-    right: "right-48 top-1/2 -rotate-90 transform translate-x-1/2 translate-y-full",
-    bottom: "bottom-36 left-1/3 ml-7 transform -translate-x-full translate-y-1/2",
-    left: "left-48 rotate-90 bottom-1/2 transform -translate-x-1/2 -translate-y-full",
+    right: "right-48 top-1/2 -rotate-90 transform translate-x-1/2 translate-y-full ",
+    bottom: "bottom-36 left-1/3 ml-7 transform -translate-x-full translate-y-1/2 ",
+    left: "left-48 rotate-90 bottom-1/2 transform -translate-x-1/2 -translate-y-full ",
   };
 
   return (
