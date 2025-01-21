@@ -159,18 +159,37 @@ const App = () => {
 
   return (
     <>
-      <div className="container mx-auto py-8">
-        <div className="left-screen">
-          <h1 className="text-3xl font-bold mb-8 text-center">
+      <div className="container mx-auto py-8   font-bold">
+        <div className="left-screen ">
+          
+          <div className="flex flex-row justify-around items-center">
+         
+                
+          <div className="text-sm text-gray-900 mt-4 text-center">
+          <h1 className="text-3xl font-bold mb-8 text-center ">
             Traffic Management System
           </h1>
-          <InputSection inputs={inputs} onInputChange={handleInputChange} />
-          <div className="max-w-md mx-auto mb-8">
+      <p><strong className=" text-xl">How it works:</strong></p>
+      <ul className="list-disc list-inside mt-2 text-gray-900 text-base">
+        <li>Upload images of vehicles at each route.</li>
+        <li>Click <strong>Process</strong> to analyze the data.</li>
+        <li>Watch dynamic traffic light adjustments in real time!</li>
+      </ul>
+    </div>
+
+                <div>
+                <InputSection inputs={inputs} onInputChange={handleInputChange} />
+                <div className="max-w-md mx-auto mt-12 mb-10">
             <ProcessButton
               onClick={handleProcess}
               disabled={inputs.some((input) => !input)}
             />
           </div>
+                </div>
+
+          </div>
+          
+         
         </div>
         <div className="flex justify-between items-center mx-72 font-bold text-3xl text-bold text-bg">
             <div className="traditional">Traditional</div>
@@ -183,14 +202,12 @@ const App = () => {
           {isSimulating && <TrafficSimulation vehicle_data={vehicleCount} />}
         </div>
       </div>
-      {isFinish ? (
+      {isFinish &&
   <>
     <CircularTimerComparison traditionalTime={20*4} calculatedTime={count}/>
     {console.log('Simulation finished.')}
   </>
-) : (
-  <>Failed to load</>
-)}
+}
 
     </>
   );

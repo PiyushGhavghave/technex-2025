@@ -19,7 +19,7 @@ const InputSection = ({ inputs, onInputChange }) => {
     <div className="flex flex-col  gap-4 images  ">
       {/* First button at the top */}
       <div className="flex flex-col items-center">
-        <div className="relative w-32 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
+        <div className="relative w-40 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
           {previews[0] ? (
             <img
               src={previews[0]}
@@ -56,7 +56,7 @@ const InputSection = ({ inputs, onInputChange }) => {
       <div className="flex justify-center space-x-32 ">
         {[1, 2].map((index) => (
           <div key={index} className="flex flex-col  items-center">
-            <div className="relative w-32 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
+            <div className="relative w-40 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
               {previews[index] ? (
                 <img
                   src={previews[index]}
@@ -95,7 +95,7 @@ const InputSection = ({ inputs, onInputChange }) => {
 
       {/* Last button at the bottom */}
       <div className="flex flex-col items-center">
-        <div className="relative w-32 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
+        <div className="relative w-40 h-32 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
           {previews[3] ? (
             <img
               src={previews[3]}
