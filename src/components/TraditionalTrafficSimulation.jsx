@@ -220,7 +220,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
     }
     // Third group (Move 600px left, then -100px Y)
     else {
-      yTranslation = -130; // Move slightly up
+      yTranslation = -160; // Move slightly up
       xTranslation = -600; // Move left
       yTransitionDelay = 0.9 * index; // Adjust x translation delay
       rotationDelay = yTransitionDelay + 4; // Rotate after x translation
@@ -308,7 +308,7 @@ const RenderCarsTopAnimated = ({ count }) => {
     }
     // Second group (Move 600px right, then -300px Y)
     else if (index < partSize * 2) {
-      yTranslation = 200; // Move slightly up
+      yTranslation = 170; // Move slightly up
       xTranslation = -600; // Move to the right
       yTransitionDelay = 1.2 * index; // Adjust x translation delay
       rotationDelay = yTransitionDelay + 2; // Rotate after x translation
@@ -316,7 +316,7 @@ const RenderCarsTopAnimated = ({ count }) => {
     }
     // Third group (Move 600px left, then -100px Y)
     else {
-      yTranslation = 100; // Move slightly up
+      yTranslation = 30; // Move slightly up
       xTranslation = 600; // Move left
       yTransitionDelay = 0.9 * index; // Adjust x translation delay
       rotationDelay = yTransitionDelay + 4; // Rotate after x translation

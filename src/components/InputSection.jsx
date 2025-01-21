@@ -47,7 +47,7 @@ const InputSection = ({ inputs, onInputChange }) => {
               onInputChange(0, null);
             }}
           >
-            Remove
+            Lane 1
           </button>
         )}
       </div>
@@ -86,7 +86,7 @@ const InputSection = ({ inputs, onInputChange }) => {
                   onInputChange(index, null);
                 }}
               >
-                Remove
+                Lane  {index+1}
               </button>
             )}
           </div>
@@ -115,7 +115,7 @@ const InputSection = ({ inputs, onInputChange }) => {
         </div>
         {previews[3] && (
           <button
-            className=" text-red-500 text-sm"
+            className=" text-red-500 text-base"
             onClick={() => {
               const updatedPreviews = [...previews];
               updatedPreviews[3] = null;
@@ -123,7 +123,7 @@ const InputSection = ({ inputs, onInputChange }) => {
               onInputChange(3, null);
             }}
           >
-            Remove
+            Lane 4
           </button>
         )}
       </div>

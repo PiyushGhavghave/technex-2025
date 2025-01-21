@@ -12,7 +12,7 @@ const CircularTimerComparison = ({ traditionalTime, calculatedTime }) => {
   
     return (
       <div className="flex flex-col items-center p-6 bg-gray-50 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">Timer Comparison</h1>
+        <h1 className="text-2xl font-bold mb-6 text-gray-800">Timer Comparison { '( Per Cycle )'}</h1>
         <div className="flex space-x-12">
           {/* Traditional Timer */}
           <div className="relative flex flex-col items-center">
@@ -81,8 +81,8 @@ const CircularTimerComparison = ({ traditionalTime, calculatedTime }) => {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p className="text-2xl font-bold text-green-600">{calculatedTime}s</p>
-              <p className="text-sm text-gray-500">Calculated</p>
+              <p className="text-3xl font-bold text-green-600">{calculatedTime}s</p>
+              <p className="text-sm text-gray-500">Dynamic</p>
             </div>
           </div>
         </div>
@@ -169,12 +169,17 @@ const App = () => {
           <h1 className="text-3xl font-bold mb-8 text-center ">
             Traffic Management System
           </h1>
-      <p><strong className=" text-xl">How it works:</strong></p>
+      <p><strong className=" text-xl text-orange-400">How it works:</strong></p>
       <ul className="list-disc list-inside mt-2 text-gray-900 text-base">
         <li>Upload images of vehicles at each route.</li>
-        <li>Click <strong>Process</strong> to analyze the data.</li>
+        <li>Click <strong className="text-green-600">Process</strong> to analyze the data.</li>
         <li>Watch dynamic traffic light adjustments in real time!</li>
       </ul>
+      {/* <div className="flex flex-row ">
+      <img src="github.png" alt="" className="w-10 h-10"/>
+      <a href="https://github.com/PiyushGhavghave/technex-2025" className="cursor-pointer text-xl text-blue-800 mt-1 ">Github Repo</a>
+      </div> */}
+      
     </div>
 
                 <div>
@@ -206,6 +211,9 @@ const App = () => {
   <>
     <CircularTimerComparison traditionalTime={20*4} calculatedTime={count}/>
     {console.log('Simulation finished.')}
+
+    
+    
   </>
 }
 
