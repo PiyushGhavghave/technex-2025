@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TrafficLight from "./TrafficLight";
 import {motion} from "framer-motion"
+import { div } from "framer-motion/client";
 const RenderCarsLeftAnimated = ({ count }) => {
   const partSize = Math.ceil(count / 3); // Divide the cars into 3 parts
 
@@ -263,7 +264,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
   });
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 mt-[21rem]"+(count<10?" mt-64":" mt-72")}>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20"+(count<10?" mt-40":" mt-72")}>
       {carDivs}
     </div>
   );
@@ -284,7 +285,7 @@ const RenderCardBottom = ({ count }) => {
   ));
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 mt-[21rem]"+(count<10?" mt-64":" mt-72")}>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20"+(count<10?" mt-40":" mt-72")}>
     {carDivs}
   </div>
   );
@@ -382,6 +383,9 @@ const RenderCarsTop = ({ count }) => {
 const TrafficSimulation = ({ vehicle_data }) => {
     const [topRed,setRed]=useState(true)
     const [topGreen,setGreen]=useState(false)
+    const [cycleCompleted,setCycle]=useState(false)
+    let count=0;
+    const [index,setIndex]=useState(0);
   const calculateTimer = (count) => {
     if (count < 10) return 5;
     if (count < 20) return 10;
@@ -393,6 +397,9 @@ const TrafficSimulation = ({ vehicle_data }) => {
   const [lightTimers, setLightTimers] = useState(() =>
     vehicle_data.map((count) => calculateTimer(count))
   );
+  for(let all of lightTimers){
+    count+=all;
+  }
   const [currentTimer, setCurrentTimer] = useState(lightTimers[0]); // Timer for the active light
 
   console.log(vehicle_data, lightTimers);
@@ -403,33 +410,42 @@ const TrafficSimulation = ({ vehicle_data }) => {
   const [laneThreeTimer, setlaneThreeTimer] = useState(lightTimers[0]+lightTimers[1])
   const [laneFourTimer, setlaneFourTimer] = useState(lightTimers[0]+lightTimers[1]+lightTimers[2])
 
+
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(currentTimer)
-      if(laneOneTimer > 0 ){
-        setlaneOneTimer((prev) => prev - 1);
+      console.log(count,index)
+      setIndex((prev)=>prev+1)
+      if(index==count+2){
+setCycle(true)
       }
-      if(laneTwoTimer > 0){
-        setlaneTwoTimer((prev) => prev - 1);
-      }
-      if(laneThreeTimer > 0 ){
-        setlaneThreeTimer((prev) => prev - 1);
-      }
-      if(laneFourTimer > 0){
-        setlaneFourTimer((prev) => prev - 1);
+      if(!cycleCompleted){
+        if(laneOneTimer > 0 ){
+          setlaneOneTimer((prev) => prev - 1);
+        }
+        if(laneTwoTimer > 0){
+          setlaneTwoTimer((prev) => prev - 1);
+        }
+        if(laneThreeTimer > 0 ){
+          setlaneThreeTimer((prev) => prev - 1);
+        }
+        if(laneFourTimer > 0){
+          setlaneFourTimer((prev) => prev - 1);
+        }
+        
+        if (currentTimer > 0) {
+  
+          setCurrentTimer((prev) => prev - 1);
+        } else {
+          // Move to the next light
+          setActiveLightIndex((prevIndex) => (prevIndex + 1) % 4);
+          setCurrentTimer(lightTimers[(activeLightIndex + 1) % 4]); // Update timer for the next light
+        }
       }
       
-      if (currentTimer > 0) {
-        setCurrentTimer((prev) => prev - 1);
-      } else {
-        // Move to the next light
-        setActiveLightIndex((prevIndex) => (prevIndex + 1) % 4);
-        setCurrentTimer(lightTimers[(activeLightIndex + 1) % 4]); // Update timer for the next light
-      }
     }, 1000);
 
     return () => clearInterval(interval); 
-  }, [currentTimer, lightTimers, activeLightIndex]);
+  }, [currentTimer, lightTimers, activeLightIndex,index]);
 
   useEffect(() => {
     // Recalculate timers dynamically if `vehicle_data` changes
@@ -438,6 +454,7 @@ const TrafficSimulation = ({ vehicle_data }) => {
   }, [vehicle_data]);
 
   return (
+    
    <div className="relative w-full max-w-2xl h-[32rem] mx-auto mt-8 bg-green-200 border border-gray-300 ">
       {/* Vertical road */}
       <div className={"absolute left-1/2 top-0 bottom-0 w-40 bg-gray-600  transform -translate-x-1/2 overflow-hidden"+((activeLightIndex==0 || activeLightIndex==2 )?" z-50":"") }>
@@ -448,40 +465,40 @@ const TrafficSimulation = ({ vehicle_data }) => {
 
         <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-yellow-400 transform -translate-x-1/2 overflow-hidden"></div>
         {activeLightIndex!=3 && <RenderCardBottom count={vehicle_data[3]} />}
-        {activeLightIndex==3 && <RenderCarsBottomAnimated count={vehicle_data[3]} />}
+        {activeLightIndex==3 && !cycleCompleted && <RenderCarsBottomAnimated count={vehicle_data[3]} />}
       </div>
 
       {/* Horizontal road */}
       <div className="absolute top-1/2 left-0 right-0 h-40 bg-gray-600 transform -translate-y-1/2 overflow-hidden">
      
         {activeLightIndex!=1 && <RenderCarsleft count={vehicle_data[1]} />} 
-        {activeLightIndex==1 &&  <RenderCarsLeftAnimated count={vehicle_data[1]} />}
+        {activeLightIndex==1  && !cycleCompleted && <RenderCarsLeftAnimated count={vehicle_data[1]} />}
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-yellow-400 transform -translate-y-1/2 "></div>
         {activeLightIndex !=2 && <RenderCarsRighht count={vehicle_data[2]} />} 
     
-        {activeLightIndex==2 && <RenderCarsRighhtAnimated count={vehicle_data[2]} />} 
+        {activeLightIndex==2 && !cycleCompleted && <RenderCarsRighhtAnimated count={vehicle_data[2]} />} 
 
         
       </div>      {/* Traffic lights */}
       <TrafficLight
         position="top"
         timer={activeLightIndex === 0 ? currentTimer : laneOneTimer}
-        isGreen={activeLightIndex === 0}
+        isGreen={cycleCompleted?false:activeLightIndex === 0}
       />
       <TrafficLight
         position="right"
         timer={activeLightIndex === 2 ? currentTimer : laneThreeTimer}
-        isGreen={activeLightIndex === 2}
+        isGreen={cycleCompleted?false:activeLightIndex === 2}
       />
       <TrafficLight
         position="bottom"
         timer={activeLightIndex === 3 ? currentTimer : laneFourTimer}
-        isGreen={activeLightIndex === 3}
+        isGreen={cycleCompleted?false:activeLightIndex === 3}
       />
       <TrafficLight
         position="left"
         timer={activeLightIndex === 1 ? currentTimer : laneTwoTimer}
-        isGreen={activeLightIndex === 1}
+        isGreen={cycleCompleted?false:activeLightIndex === 1}
       />
     </div>
   );

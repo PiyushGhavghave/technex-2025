@@ -263,7 +263,7 @@ const RenderCarsBottomAnimated = ({ count }) => {
   });
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-64":" mt-72")}>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-40":" mt-72")}>
       {carDivs}
     </div>
   );
@@ -284,7 +284,7 @@ const RenderCardBottom = ({ count }) => {
   ));
 
   return (
-    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-64":" mt-72")}>
+    <div className={"grid grid-cols-3 grid-flow-row auto-rows-auto gap-1 mr-20 "+(count<10?" mt-40":" mt-72")}>
       {carDivs}
     </div>
   );
@@ -429,30 +429,30 @@ const TraditionalTrafficSimulation = ({ vehicle_data }) => {
 
   return (
    <div className="relative w-full max-w-2xl h-[32rem] mx-auto mt-8 bg-green-200 border border-gray-300 ">
-      {/* Vertical road */}
-      <div className={"absolute left-1/2 top-0 bottom-0 w-40 bg-gray-600  transform -translate-x-1/2 overflow-hidden"+((activeLightIndex==0 || activeLightIndex==2 )?" z-50":"") }>
-        {/* cars top */}
-      {activeLightIndex!=0 &&  <RenderCarsTop count={vehicle_data[0]} />}  
-        { activeLightIndex==0 && <RenderCarsTopAnimated count={vehicle_data[0]} /> }
-
-
-        <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-yellow-400 transform -translate-x-1/2 overflow-hidden"></div>
-        {activeLightIndex!=3 && <RenderCardBottom count={vehicle_data[2]} />}
-        {activeLightIndex==3 && <RenderCarsBottomAnimated count={vehicle_data[2]} />}
-      </div>
-
-      {/* Horizontal road */}
-      <div className="absolute top-1/2 left-0 right-0 h-40 bg-gray-600 transform -translate-y-1/2 overflow-hidden">
-     
-        {activeLightIndex!=1 && <RenderCarsleft count={vehicle_data[3]} />} 
-        {activeLightIndex==1 &&  <RenderCarsLeftAnimated count={vehicle_data[3]} />}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-yellow-400 transform -translate-y-1/2 "></div>
-        {activeLightIndex != 2 && <RenderCarsRighht count={vehicle_data[1]} />} 
+     {/* Vertical road */}
+          <div className={"absolute left-1/2 top-0 bottom-0 w-40 bg-gray-600  transform -translate-x-1/2 overflow-hidden"+((activeLightIndex==0 || activeLightIndex==2 )?" z-50":"") }>
+            {/* cars top */}
+          {activeLightIndex!=0 &&  <RenderCarsTop count={vehicle_data[0]} />}  
+            { activeLightIndex==0 && <RenderCarsTopAnimated count={vehicle_data[0]} /> }
     
-        {activeLightIndex==2 && <RenderCarsRighhtAnimated count={vehicle_data[1]} />} 
-
+    
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-yellow-400 transform -translate-x-1/2 overflow-hidden"></div>
+            {activeLightIndex!=3 && <RenderCardBottom count={vehicle_data[3]} />}
+            {activeLightIndex==3 && <RenderCarsBottomAnimated count={vehicle_data[3]} />}
+          </div>
+    
+          {/* Horizontal road */}
+          <div className="absolute top-1/2 left-0 right-0 h-40 bg-gray-600 transform -translate-y-1/2 overflow-hidden">
+         
+            {activeLightIndex!=1 && <RenderCarsleft count={vehicle_data[1]} />} 
+            {activeLightIndex==1 &&  <RenderCarsLeftAnimated count={vehicle_data[1]} />}
+            <div className="absolute top-1/2 left-0 right-0 h-1 bg-yellow-400 transform -translate-y-1/2 "></div>
+            {activeLightIndex !=2 && <RenderCarsRighht count={vehicle_data[2]} />} 
         
-      </div>      {/* Traffic lights */}
+            {activeLightIndex==2 && <RenderCarsRighhtAnimated count={vehicle_data[2]} />} 
+    
+            
+          </div> 
       <TrafficLight
         position="top"
         timer={activeLightIndex === 0 ? currentTimer : laneOneTimer}
